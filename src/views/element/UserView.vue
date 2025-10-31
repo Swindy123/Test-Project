@@ -282,28 +282,23 @@ export default {
                 </el-card>
 
                 <!-- 弹出添加用户框 -->
-                <el-dialog 
-                    title="添加新用户" 
-                    :visible.sync="dialogFormVisible"
-                    width="30%"
-                    :close-on-click-modal="false"
-                >
-                    <el-form :model="form" label-width="100px">
-                        <el-form-item label="用户名" required>
-                            <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户名"></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码" required>
-                            <el-input v-model="form.password" autocomplete="off" type="password" placeholder="请输入密码"></el-input>
-                        </el-form-item>
-                        <el-form-item label="确认密码" required>
-                            <el-input v-model="form.confirmpassword" autocomplete="off" type="password" placeholder="请再次输入密码"></el-input>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false" icon="el-icon-close">取 消</el-button>
-                        <el-button type="primary" @click="handleConfirm" icon="el-icon-check">确 定</el-button>
-                    </div>
-                </el-dialog>
+                <el-dialog title="添加新用户" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="用户名" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="密码" :label-width="formLabelWidth">
+                    <el-input v-model="form.password" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="确认密码" :label-width="formLabelWidth">
+                    <el-input v-model="form.confirmpassword" autocomplete="off"></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+              </el-dialog>
             </el-main>
         </el-container>
     </el-container>
@@ -350,10 +345,6 @@ export default {
           confirmpassword: ''
         };
         this.dialogFormVisible = true;
-      },
-      onSubmit() {
-        console.log('submit!');
-        this.$message.success('查询功能待实现');
       },
       handleEdit(index, row) {
         console.log(index, row);
