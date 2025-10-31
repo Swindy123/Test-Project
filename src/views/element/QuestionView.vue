@@ -211,14 +211,8 @@ export default {
                 <!-- 顶部的查询表单 -->
                 <el-card shadow="hover" style="margin-bottom: 20px">
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                        <el-form-item label="题目关键词">
-                            <el-input 
-                                v-model="formInline.keyword" 
-                                placeholder="请输入题目关键词" 
-                                clearable
-                                prefix-icon="el-icon-search"
-                                style="width: 300px"
-                            ></el-input>
+                        <el-form-item label="题目">
+                            <el-input v-model="formInline.keyword" placeholder="请输入题目关键词" clearable></el-input>
                         </el-form-item>
 
                         <el-form-item>
@@ -238,7 +232,7 @@ export default {
                         style="width: 100%"
                         stripe
                         border
-                        :header-cell-style="{background:'#f5f7fa',color:'#606266', fontWeight: '600'}"
+                        :header-cell-style="{background:'#f5f7fa',color:'#606266'}"
                     >
                         <el-table-column
                             prop="id"
@@ -290,21 +284,18 @@ export default {
                             </template>
                         </el-table-column>
                         
-                        <el-table-column label="操作" width="200" align="center">
+                        <el-table-column label="操作" width="220" align="center">
                             <template slot-scope="scope">
                                 <el-button
                                     size="mini"
-                                    type="primary"
                                     @click="handleEdit(scope.$index, scope.row)"
                                     icon="el-icon-edit"
-                                    plain
                                 >编辑</el-button>
                                 <el-button
                                     size="mini"
                                     type="danger"
                                     @click="handleDelete(scope.$index, scope.row)"
                                     icon="el-icon-delete"
-                                    plain
                                 >删除</el-button>
                             </template>
                         </el-table-column>
@@ -326,59 +317,33 @@ export default {
                 </el-card>
 
                 <!-- 弹出添加题目框 -->
-                <el-dialog 
-                    title="添加新题目" 
-                    :visible.sync="dialogFormVisible"
-                    width="600px"
-                    :close-on-click-modal="false"
-                >
-                    <el-form :model="form" label-width="80px" :rules="rules" ref="questionForm">
-                        <el-form-item label="题目" prop="question">
-                            <el-input 
-                                v-model="form.question" 
-                                autocomplete="off" 
-                                placeholder="请输入题目内容"
-                                type="textarea"
-                                :rows="3"
-                            ></el-input>
-                        </el-form-item>
-                        
-                        <el-form-item label="选项" required>
-                            <div class="options-container">
-                                <el-form-item 
-                                    v-for="(option, index) in form.options" 
-                                    :key="index" 
-                                    :prop="'options.' + index"
-                                    :rules="{ required: true, message: '选项不能为空', trigger: 'blur' }"
-                                    class="option-item-form"
-                                >
-                                    <el-input 
-                                        v-model="form.options[index]"
-                                        :placeholder="`选项 ${String.fromCharCode(65 + index)}`"
-                                        style="margin-bottom: 10px"
-                                    >
-                                        <template slot="prepend">{{ String.fromCharCode(65 + index) }}.</template>
-                                    </el-input>
-                                </el-form-item>
-                            </div>
-                        </el-form-item>
-                        
-                        <el-form-item label="答案" prop="answer">
-                            <el-select v-model="form.answer" placeholder="请选择正确答案" style="width: 100%">
-                                <el-option 
-                                    v-for="(option, index) in form.options" 
-                                    :key="index"
-                                    :label="`${String.fromCharCode(65 + index)}. ${option}`"
-                                    :value="String.fromCharCode(65 + index)"
-                                ></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false" icon="el-icon-close">取 消</el-button>
-                        <el-button type="primary" @click="handleConfirm" icon="el-icon-check">确 定</el-button>
-                    </div>
-                </el-dialog>
+               <el-dialog title="添加新题目" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="题目" :label-width="formLabelWidth">
+                    <el-input v-model="form.qiestion" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="选项a" :label-width="formLabelWidth">
+                    <el-input v-model="form.optiona" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="选项b" :label-width="formLabelWidth">
+                    <el-input v-model="form.optionb" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="选项c" :label-width="formLabelWidth">
+                    <el-input v-model="form.optionc" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="选项d" :label-width="formLabelWidth">
+                    <el-input v-model="form.optiond" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="答案" :label-width="formLabelWidth">
+                    <el-input v-model="form.answer" autocomplete="off"></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+              </el-dialog>
+
             </el-main>
         </el-container>
     </el-container>
@@ -439,12 +404,8 @@ export default {
           this.$refs.questionForm.clearValidate();
         });
       },
-      onSubmit() {
-        this.$message.success('查询功能待实现');
-      },
       handleEdit(index, row) {
         this.$message.info(`准备编辑题目: ${row.question}`);
-        // 这里可以打开编辑对话框，填充数据
       },
       handleDelete(index, row) {
         this.$confirm(`确认删除题目 "${row.question}" 吗?`, '提示', {
@@ -461,14 +422,12 @@ export default {
       handleConfirm() {
         this.$refs.questionForm.validate((valid) => {
           if (valid) {
-            // 验证选项是否都填写了
             const emptyOption = this.form.options.some(option => !option.trim());
             if (emptyOption) {
               this.$message.warning('请填写所有选项');
               return;
             }
             
-            // 这里应该调用API添加题目
             console.log('添加题目:', this.form);
             this.$message.success('题目添加成功');
             this.dialogFormVisible = false;
@@ -488,7 +447,7 @@ export default {
   }
 </script>
 
-<style scoped>
+<style>
 .el-header {
     padding: 0 20px;
 }
