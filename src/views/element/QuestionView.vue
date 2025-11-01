@@ -257,33 +257,17 @@ export default {
                                 </div>
                             </template>
                         </el-table-column>
-                        
-                        <el-table-column
-                            label="选项"
-                            min-width="350"
-                            align="center"
-                        >
-                            <template slot-scope="scope">
-                                <div class="options-list">
-                                    <div v-for="(option, index) in scope.row.options" :key="index" class="option-item">
-                                        <span class="option-label">{{ String.fromCharCode(65 + index) }}.</span>
-                                        <span>{{ option }}</span>
-                                    </div>
-                                </div>
+                        <el-table-column label="选项" width="260">
+                          <template slot-scope="scope">
+                              <span style="margin-left: 10px">{{ scope.row.options }}</span>
                             </template>
                         </el-table-column>
-                        
-                        <el-table-column
-                            prop="answer"
-                            label="答案"
-                            width="120"
-                            align="center"
-                        >
-                            <template slot-scope="scope">
-                                <el-tag type="success" effect="dark">{{ scope.row.answer }}</el-tag>
+
+                        <el-table-column label="答案" width="180">
+                          <template slot-scope="scope">
+                              <span style="margin-left: 10px">{{ scope.row.answer }}</span>
                             </template>
                         </el-table-column>
-                        
                         <el-table-column label="操作" width="220" align="center">
                             <template slot-scope="scope">
                                 <el-button
@@ -374,20 +358,32 @@ export default {
           {
             id: "1",
             question: "法国的首都是哪个城市？",
-            options: ["巴黎", "伦敦", "柏林", "马德里"],
-            answer: "A"
+            options: "巴黎,伦敦,柏林,马德里",
+            answer: "巴黎"
           }, 
           {
             id: "2",
             question: "以下哪个不是编程语言？",
-            options: ["Python", "Java", "HTML", "C++"],
-            answer: "C"
+            options: "Python, Java, HTML, C++",
+            answer: "HTML"
           }, 
           {
             id: "3",
             question: "中国的首都是？",
-            options: ["上海", "北京", "广州", "深圳"],
-            answer: "B"
+            options: "上海, 北京, 广州, 深圳",
+            answer: "北京"
+          },
+          {
+            id: "4",
+            question: "中国的首都是？",
+            options: "上海, 北京, 广州, 深圳",
+            answer: "北京"
+          },
+          {
+            id: "5",
+            question: "中国的首都是？",
+            options: "上海, 北京, 广州, 深圳",
+            answer: "北京"
           }
         ]
       }
